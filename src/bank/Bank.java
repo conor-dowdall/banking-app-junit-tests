@@ -40,6 +40,8 @@ public class Bank {
     }
 
     /**
+     * Retrieves the maximum deposit limit.
+     * 
      * @return the maximum deposit limit.
      */
     public double getMaxDeposit() {
@@ -47,6 +49,8 @@ public class Bank {
     }
 
     /**
+     * Retrieves the maximum withdrawal limit.
+     * 
      * @return the maximum withdrawal limit.
      */
     public double getMaxWithdrawal() {
@@ -54,6 +58,8 @@ public class Bank {
     }
 
     /**
+     * Retrieves the maximum loan limit.
+     * 
      * @return the maximum loan limit.
      */
     public double getMaxLoan() {
@@ -61,6 +67,8 @@ public class Bank {
     }
 
     /**
+     * Retrieves the list of accounts in the bank.
+     * 
      * @return the list of accounts in the bank.
      */
     public List<Account> getAccounts() {
@@ -68,6 +76,8 @@ public class Bank {
     }
 
     /**
+     * Retrieves the current reserve amount in the bank.
+     * 
      * @return the current reserve amount.
      */
     public double getReserves() {
@@ -75,7 +85,7 @@ public class Bank {
     }
 
     /**
-     * Sets the maximum deposit limit.
+     * Sets the maximum deposit limit in the bank.
      *
      * @param maxDeposit the new maximum deposit limit
      */
@@ -84,7 +94,7 @@ public class Bank {
     }
 
     /**
-     * Sets the maximum withdrawal limit.
+     * Sets the maximum withdrawal limit in the bank.
      *
      * @param maxWithdrawal the new maximum withdrawal limit
      */
@@ -93,7 +103,7 @@ public class Bank {
     }
 
     /**
-     * Sets the maximum loan limit.
+     * Sets the maximum loan limit in the bank.
      *
      * @param maxLoan the new maximum loan limit
      */
