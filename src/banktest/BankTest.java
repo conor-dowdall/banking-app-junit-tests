@@ -337,4 +337,68 @@ public class BankTest {
                 assertThrows(InvalidWithdrawalAmountException.class,
                                 () -> bank.withdraw(INITIAL_ACCOUNT_HOLDERS.getFirst(), excessiveAmount));
         }
+
+        /**
+         * Test method to verify the {@link Bank#getMaxDeposit()} method.
+         * <p>
+         * This test ensures that the maximum deposit amount set during the creation of
+         * the {@link Bank} object is correctly returned by the {@code getMaxDeposit()}
+         * method.
+         * </p>
+         */
+        @Test
+        public void testGetMaxDeposit() {
+                assertEquals(MAX_DEPOSIT,
+                                bank.getMaxDeposit(),
+                                "The max deposit amount should match the expected value.");
+        }
+
+        /**
+         * Test method to verify the {@link Bank#getMaxWithdrawal()} method.
+         * <p>
+         * This test ensures that the maximum withdrawal amount set during the creation
+         * of the {@link Bank} object is correctly returned by the
+         * {@code getMaxWithdrawal()} method.
+         * </p>
+         */
+        @Test
+        public void testGetMaxWithdrawal() {
+                assertEquals(MAX_WITHDRAWAL,
+                                bank.getMaxWithdrawal(),
+                                "The max withdrawal amount should match the expected value.");
+        }
+
+        /**
+         * Test method to verify the {@link Bank#getMaxLoan()} method.
+         * <p>
+         * This test ensures that the maximum loan amount set during the creation of the
+         * {@link Bank} object is correctly returned by the {@code getMaxLoan()} method.
+         * </p>
+         */
+        @Test
+        public void testGetMaxLoan() {
+                // Verify that the max loan amount matches the expected value
+                assertEquals(MAX_LOAN,
+                                bank.getMaxLoan(),
+                                "The max loan amount should match the expected value.");
+        }
+
+        /**
+         * Test method to verify the {@link Bank#setMaxWithdrawal(double)} method.
+         * <p>
+         * This test ensures that the {@code setMaxWithdrawal()} method correctly
+         * updates the maximum withdrawal limit in the {@link Bank} object.
+         * </p>
+         */
+        @Test
+        public void testSetMaxWithdrawal() {
+                // Change the max withdrawal amount
+                double newMaxWithdrawal = 12_000.0;
+                bank.setMaxWithdrawal(newMaxWithdrawal);
+
+                // Verify that the new max withdrawal amount is set correctly
+                assertEquals(newMaxWithdrawal,
+                                bank.getMaxWithdrawal(),
+                                "The max withdrawal amount should be updated to the new value.");
+        }
 }
