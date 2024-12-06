@@ -7,7 +7,7 @@ public class Account {
 
     private String accountHolder;
     private double accountBalance;
-    private double loanBalance = 0;
+    private double loanBalance = 0.0;
 
     public Account(String accountHolder, double balance) {
         this.accountHolder = accountHolder;

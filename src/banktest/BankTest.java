@@ -29,7 +29,7 @@ public class BankTest {
         private static final String ACCOUNT_HOLDER_2 = "Bob";
         private static final List<String> INITIAL_ACCOUNT_HOLDERS = List.of(ACCOUNT_HOLDER_1, ACCOUNT_HOLDER_2);
 
-        private static Bank bank = new Bank(MAX_DEPOSIT, MAX_WITHDRAWAL, MAX_LOAN);
+        private static final Bank bank = new Bank(MAX_DEPOSIT, MAX_WITHDRAWAL, MAX_LOAN);
 
         /**
          * Initializes the bank's reserves before all tests are executed.
@@ -94,7 +94,7 @@ public class BankTest {
         @Test
         public void testAddAccountInvalidDeposit() {
                 assertThrows(InvalidDepositAmountException.class,
-                                () -> bank.addAccount(INITIAL_ACCOUNT_HOLDERS.getFirst(), -1000));
+                                () -> bank.addAccount(INITIAL_ACCOUNT_HOLDERS.getFirst(), -1_000.0));
         }
 
         /**
@@ -105,7 +105,7 @@ public class BankTest {
         public void testDepositExceedsMaxLimit()
                         throws InvalidDepositAmountException {
                 assertThrows(InvalidDepositAmountException.class,
-                                () -> bank.deposit(INITIAL_ACCOUNT_HOLDERS.getFirst(), 25000));
+                                () -> bank.deposit(INITIAL_ACCOUNT_HOLDERS.getFirst(), 25_000.0));
         }
 
         /**
@@ -178,7 +178,7 @@ public class BankTest {
 
                 // clean up
                 bank.repayLoan("John Doe", INITIAL_RESERVE);
-                bank.withdraw("John Doe", 1);
+                bank.withdraw("John Doe", 1.0);
                 bank.removeAccount("John Doe");
                 bank.setMaxDeposit(MAX_DEPOSIT);
                 bank.setMaxLoan(MAX_LOAN);
@@ -194,17 +194,17 @@ public class BankTest {
                         InsufficientReservesException,
                         AccountNotFoundException,
                         InvalidLoanAmountException {
-                bank.approveLoan(INITIAL_ACCOUNT_HOLDERS.getFirst(), 5_000);
-                bank.repayLoan(INITIAL_ACCOUNT_HOLDERS.getFirst(), 3_000);
+                bank.approveLoan(INITIAL_ACCOUNT_HOLDERS.getFirst(), 5_000.0);
+                bank.repayLoan(INITIAL_ACCOUNT_HOLDERS.getFirst(), 3_000.0);
 
                 assertEquals(2_000,
                                 bank.getLoanBalance(INITIAL_ACCOUNT_HOLDERS.getFirst()));
 
-                assertEquals(INITIAL_RESERVE + INITIAL_DEPOSIT * INITIAL_ACCOUNT_HOLDERS.size() - 5_000 + 3_000,
+                assertEquals(INITIAL_RESERVE + INITIAL_DEPOSIT * INITIAL_ACCOUNT_HOLDERS.size() - 5_000.0 + 3_000.0,
                                 bank.getReserves());
 
                 // clean up
-                bank.repayLoan(INITIAL_ACCOUNT_HOLDERS.getFirst(), 2_000);
+                bank.repayLoan(INITIAL_ACCOUNT_HOLDERS.getFirst(), 2_000.0);
         }
 
         /**
@@ -227,12 +227,12 @@ public class BankTest {
                         InvalidWithdrawalAmountException,
                         InvalidLoanAmountException,
                         DuplicateAccountException {
-                bank.addAccount("John Doe", 10_000);
-                bank.deposit("John Doe", 5_000);
-                bank.withdraw("John Doe", 3_000);
+                bank.addAccount("John Doe", 10_000.0);
+                bank.deposit("John Doe", 5_000.0);
+                bank.withdraw("John Doe", 3_000.0);
 
                 assertEquals(INITIAL_RESERVE + INITIAL_DEPOSIT * INITIAL_ACCOUNT_HOLDERS.size()
-                                + 10_000 + 5_000 - 3_000,
+                                + 10_000.0 + 5_000.0 - 3_000.0,
                                 bank.getReserves());
 
                 // clean up
@@ -248,8 +248,8 @@ public class BankTest {
                         InvalidLoanAmountException,
                         InsufficientReservesException {
                 assertThrows(DuplicateAccountException.class, () -> {
-                        bank.addAccount("Jane Doe", 1_000);
-                        bank.addAccount("Jane Doe", 1_000);
+                        bank.addAccount("Jane Doe", 1_000.0);
+                        bank.addAccount("Jane Doe", 1_000.0);
                 });
 
                 // clean up
@@ -309,5 +309,32 @@ public class BankTest {
         private static Stream<Arguments> provideInvalidAmountsForLoan() {
                 return Stream.of(Arguments.of(-5_000.0, "Amount must be greater than zero"),
                                 Arguments.of(MAX_LOAN + 0.1, "Amount exceeds the maximum allowed loan limit"));
+        }
+
+        /**
+         * Verifies that an {@link InvalidWithdrawalAmountException} is thrown when
+         * attempting to withdraw an invalid amount (less than or equal to zero).
+         */
+        @Test
+        public void testInvalidWithdrawalAmountNegativeOrZero() {
+                // Test for negative withdrawal amount
+                assertThrows(InvalidWithdrawalAmountException.class,
+                                () -> bank.withdraw(INITIAL_ACCOUNT_HOLDERS.getFirst(), -500.0));
+
+                // Test for zero withdrawal amount
+                assertThrows(InvalidWithdrawalAmountException.class,
+                                () -> bank.withdraw(INITIAL_ACCOUNT_HOLDERS.getFirst(), 0.0));
+        }
+
+        /**
+         * Verifies that an {@link InvalidWithdrawalAmountException} is thrown when
+         * attempting to withdraw an amount that exceeds the maximum withdrawal limit.
+         */
+        @Test
+        public void testInvalidWithdrawalAmountExceedsMaxLimit() {
+                double excessiveAmount = MAX_WITHDRAWAL + 1.0;
+
+                assertThrows(InvalidWithdrawalAmountException.class,
+                                () -> bank.withdraw(INITIAL_ACCOUNT_HOLDERS.getFirst(), excessiveAmount));
         }
 }
