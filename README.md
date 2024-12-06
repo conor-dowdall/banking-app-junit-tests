@@ -1,6 +1,9 @@
-# Bank App
+# Banking App with JUnit Tests
 
 This is a simple Bank Application built in Java, implementing core banking functionalities such as account management, deposits, withdrawals, and loan handling. The application has been refactored for maintainability and tested with JUnit 5 to ensure the correctness of the codebase.
+
+Javadoc for this project can be accessed at 
+[https://conor-dowdall.github.io/banking-app-junit-tests/](https://conor-dowdall.github.io/banking-app-junit-tests/).
 
 ## Features
 
