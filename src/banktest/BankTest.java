@@ -332,10 +332,15 @@ public class BankTest {
          */
         @Test
         public void testInvalidWithdrawalAmountExceedsMaxLimit() {
-                double excessiveAmount = MAX_WITHDRAWAL + 1.0;
+                double newMaxWithdrawal = 1_000.0;
+                bank.setMaxWithdrawal(newMaxWithdrawal);
+                double excessiveAmount = newMaxWithdrawal + 1.0;
 
                 assertThrows(InvalidWithdrawalAmountException.class,
                                 () -> bank.withdraw(INITIAL_ACCOUNT_HOLDERS.getFirst(), excessiveAmount));
+
+                // clean up
+                bank.setMaxWithdrawal(MAX_WITHDRAWAL);
         }
 
         /**
